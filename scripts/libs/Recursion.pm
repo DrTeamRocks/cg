@@ -37,7 +37,7 @@ package Recursion {
     {
         my $self = shift;
         my $dir = shift;
-        #my $verbose = shift;
+        my $verbose = shift;
 
         # Open current directory and create files array
         opendir DIR, $dir or return;
@@ -59,12 +59,12 @@ package Recursion {
                 my $digest = $self->{crc}->digest;
 
                 # If need more info
-                #if ($verbose eq '1') {
-#                    print "F: ".$_."\n";
-#                    print $size."\n";
-#                    print $mtime."\n";
-#                    print $digest."\n\n";
-                #}
+                if ($verbose eq 1) {
+                    print "F: ".$_."\n";
+                    print $size."\n";
+                    print $mtime."\n";
+                    print $digest."\n\n";
+                }
 
                 # Get value
                 my @result = $self->{db}->query("SELECT * FROM COMPANY;");
@@ -77,10 +77,10 @@ package Recursion {
                 my $mtime = stat($_)->mtime;
 
                 # If need more info
-                #if ($verbose eq '1') {
-#                    print "D: ".$_."\n";
-#                    print $mtime."\n\n";
-                #}
+                if ($verbose eq 1) {
+                    print "D: ".$_."\n";
+                    print $mtime."\n\n";
+                }
 
                 # Scan files in dir
                 $self->init($_);
@@ -90,15 +90,15 @@ package Recursion {
             if (-l $_)
             {
                 # Fileinfo
-                #my $mtime = stat($_)->mtime;
+                my $mtime = stat($_)->mtime;
                 my $target = readlink($_);
 
                 # If need more info
-                #if ($verbose eq '1') {
-#                    print "L: ".$_."\n";
-#                    print $target."\n";
-                    #print $mtime."\n\n";
-                #}
+                if ($verbose eq 1) {
+                    print "L: ".$_."\n";
+                    print $target."\n";
+                    print $mtime."\n\n";
+                }
             }
 
         }
